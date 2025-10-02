@@ -37,16 +37,24 @@
 
 .orders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: var(--spacing-lg);
   margin-top: var(--spacing-xl);
 }
 
 .order-card {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  transition: all var(--transition-base);
+  border: 1px solid var(--color-gray-200);
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-gray-300);
 }
 
 .order-card-header {
@@ -76,6 +84,7 @@
   font-weight: 700;
   color: var(--color-gray-900);
   font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
 }
 
 .order-time {
@@ -103,8 +112,9 @@
 .detail-row {
   display: flex;
   justify-content: space-between;
-  font-size: 14px;
+  font-size: 15px;
   gap: var(--spacing-md);
+  padding: var(--spacing-xs) 0;
 }
 
 .detail-label {
@@ -120,6 +130,11 @@
   word-break: break-word;
 }
 
+.detail-value-highlight {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
 .special-badge-inline {
   margin-top: var(--spacing-xs);
   display: inline-flex;
@@ -129,9 +144,10 @@
 .order-address {
   display: flex;
   gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  background: var(--color-gray-50);
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-gray-100) 100%);
   border-radius: var(--radius-md);
+  border: 1px solid var(--color-gray-200);
 }
 
 .address-icon {
@@ -154,6 +170,7 @@
   color: var(--color-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin-bottom: 2px;
 }
 
 .address-text {
@@ -167,9 +184,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) 0;
+  padding: var(--spacing-lg) 0;
   border-top: 1px solid var(--color-gray-200);
   border-bottom: 1px solid var(--color-gray-200);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.02) 0%, rgba(59, 130, 246, 0.05) 100%);
+  margin: 0 calc(-1 * var(--spacing-xl));
+  padding-left: var(--spacing-xl);
+  padding-right: var(--spacing-xl);
 }
 
 .price-label {
@@ -181,7 +202,7 @@
 .price-value {
   font-size: 24px;
   font-weight: 700;
-  color: var(--color-gray-900);
+  color: var(--color-accent);
 }
 
 .otp-section {
@@ -192,10 +213,28 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  background: rgba(59, 130, 246, 0.05);
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.12) 100%);
   border-radius: var(--radius-md);
-  border: 1.5px dashed var(--color-accent);
+  border: 2px dashed var(--color-accent);
+  position: relative;
+  overflow: hidden;
+}
+
+.otp-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .otp-label {
@@ -210,8 +249,9 @@
   font-weight: 700;
   color: var(--color-accent);
   font-family: 'Courier New', monospace;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
   flex: 1;
+  text-shadow: 0 1px 2px rgba(59, 130, 246, 0.2);
 }
 
 .copy-btn {
@@ -233,6 +273,8 @@
 .copy-btn:hover {
   background: var(--color-accent);
   color: var(--color-white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .verify-otp-section {
@@ -280,6 +322,13 @@
 
 .order-actions .btn {
   flex: 1;
+  font-weight: 600;
+  transition: all var(--transition-base);
+}
+
+.order-actions .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 .delivered-badge {
@@ -297,7 +346,7 @@
 
 @media (max-width: 1200px) {
   .orders-grid {
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   }
 }
 
@@ -317,6 +366,12 @@
 
   .order-card {
     padding: var(--spacing-md);
+  }
+
+  .order-price-row {
+    margin: 0 calc(-1 * var(--spacing-md));
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
   }
 
   .order-price-row {

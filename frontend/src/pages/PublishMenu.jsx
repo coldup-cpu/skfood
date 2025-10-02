@@ -12,6 +12,8 @@ const PublishMenu = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [newSabji, setNewSabji] = useState({ name: '', imageUrl: '', isSpecial: false });
+  const [showHistorySection, setShowHistorySection] = useState(false);
+  const [saveAsNewHistory, setSaveAsNewHistory] = useState(true);
 
   useEffect(() => {
     fetchMenuHistory();
@@ -101,7 +103,8 @@ const PublishMenu = () => {
     setMealType(menu.mealType);
     setBasePrice(menu.basePrice);
     setSabjis(menu.listOfSabjis || []);
-    setShowHistory(false);
+    setShowHistorySection(false);
+    setSaveAsNewHistory(false); // Don't save as new history by default when loading from history
   };
 
   const publishMenu = async () => {
@@ -120,6 +123,7 @@ const PublishMenu = () => {
       mealType,
       basePrice,
       listOfSabjis: sabjis,
+      isNewMeal: saveAsNewHistory,
     };
 
     try {
@@ -128,6 +132,7 @@ const PublishMenu = () => {
       alert('Menu published successfully!');
       setSabjis([]);
       fetchMenuHistory();
+      setSaveAsNewHistory(true); // Reset for next menu
     } catch (error) {
       console.error('Error publishing menu:', error);
       alert('Failed to publish menu. Please try again.');
@@ -143,6 +148,66 @@ const PublishMenu = () => {
       </div>
 
       <div className="menu-form">
+        <div className="form-section history-section">
+          <div className="section-header">
+            <h2 className="section-title">Quick Start</h2>
+            <button 
+              className="btn-toggle-history" 
+              onClick={() => setShowHistorySection(!showHistorySection)}
+            >
+              {showHistorySection ? 'Hide History' : 'Load from History'}
+            </button>
+          </div>
+          <p className="history-description">
+            Save time by loading a previous menu and making adjustments as needed.
+          </p>
+          
+          {showHistorySection && (
+            <div className="history-grid">
+              {menuHistory.length === 0 ? (
+                <div className="empty-state">
+                  <p className="empty-message">No menu history available</p>
+                </div>
+              ) : (
+                menuHistory.map((menu, index) => (
+                  <div key={index} className="history-card">
+                    <div className="history-card-header">
+                      <div className="history-meal-info">
+                        <span className="history-meal-type">{menu.mealType}</span>
+                        <span className="history-date">
+                          {new Date(menu.createdAt).toLocaleDateString('en-IN', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                          })}
+                        </span>
+                      </div>
+                      <span className="history-price">₹{menu.basePrice}</span>
+                    </div>
+                    <div className="history-sabjis">
+                      {menu.listOfSabjis?.slice(0, 3).map((sabji, idx) => (
+                        <span key={idx} className="history-sabji-tag">
+                          {sabji.name}
+                          {sabji.isSpecial && <span className="history-special-star">★</span>}
+                        </span>
+                      ))}
+                      {menu.listOfSabjis?.length > 3 && (
+                        <span className="history-sabji-more">+{menu.listOfSabjis.length - 3} more</span>
+                      )}
+                    </div>
+                    <button 
+                      className="btn-load-history"
+                      onClick={() => loadHistoryMenu(menu)}
+                    >
+                      Load this Menu
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+
         <div className="form-section meal-type-section">
           <h2 className="section-title">Meal Type</h2>
           <div className="meal-type-toggle">
@@ -251,6 +316,51 @@ const PublishMenu = () => {
           )}
         </div>
 
+        <div className="form-section publish-options-section">
+          <h2 className="section-title">Publish Options</h2>
+          <label className="publish-checkbox-label">
+            <input
+              type="checkbox"
+              checked={saveAsNewHistory}
+              onChange={(e) => setSaveAsNewHistory(e.target.checked)}
+              className="publish-checkbox"
+            />
+            <span>Save this menu to history for future use</span>
+          </label>
+          <p className="publish-helper-text">
+            When enabled, this menu will be saved and can be quickly loaded later.
+          </p>
+        </div>
+
+        <div className="form-section publish-section">
+          <button 
+            className={`btn-publish ${sabjis.length === 0 ? 'btn-publish-disabled' : ''}`}
+            onClick={publishMenu}
+            disabled={loading || sabjis.length === 0}
+          >
+            {loading ? (
+              <>
+                <svg className="publish-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                Publishing...
+              </>
+            ) : (
+              <>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                  <path d="M2 2l7.586 7.586"></path>
+                  <circle cx="11" cy="11" r="2"></circle>
+                </svg>
+                Publish Menu ({sabjis.length} sabji{sabjis.length !== 1 ? 's' : ''})
+              </>
+            )}
+          </button>
+          {sabjis.length === 0 && (
+            <p className="publish-warning">Please add at least one sabji to publish the menu</p>
+          )}
+        </div>
       </div>
 
       {showModal && (

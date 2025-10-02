@@ -13,6 +13,29 @@ const Orders = () => {
   const [otpInput, setOtpInput] = useState('');
   const [copiedOTP, setCopiedOTP] = useState(null);
 
+  // Dummy order for design purposes
+  const dummyOrder = {
+    _id: 'dummy123456789',
+    userId: 'user123',
+    menuId: 'menu123',
+    sabjisSelected: ['Aloo Gobi', 'Dal Tadka'],
+    base: 'roti',
+    extraRoti: 2,
+    isSpecial: true,
+    quantity: 2,
+    totalPrice: 180,
+    tipMoney: 20,
+    address: {
+      label: 'Hostel Room',
+      address: 'Room 204, Boys Hostel, University Campus, New Delhi - 110001',
+      lat: 28.6139,
+      lng: 77.2090
+    },
+    otp: '1234',
+    status: 'Confirmed',
+    createdAt: new Date().toISOString()
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -24,9 +47,12 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const response = await adminAPI.getAllOrders();
-      setOrders(response.data);
+      // Add dummy order for design purposes
+      setOrders([dummyOrder, ...response.data]);
     } catch (error) {
       console.error('Error fetching orders:', error);
+      // If API fails, at least show dummy order
+      setOrders([dummyOrder]);
     } finally {
       setLoading(false);
     }
