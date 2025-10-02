@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { adminAPI } from '../services/api';
+import { Card, Badge, Button, Tabs, EmptyState, LoadingSpinner } from '../components/UI';
+import '../components/UIComponents.css';
 import './Orders.css';
 
 const Orders = () => {
@@ -86,81 +88,87 @@ const Orders = () => {
     });
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Confirmed':
-        return 'status-confirmed';
-      case 'on-the-way':
-        return 'status-on-the-way';
-      case 'delivered':
-        return 'status-delivered';
-      default:
-        return '';
-    }
+  const getStatusVariant = (status) => {
+    if (status === 'Confirmed') return 'warning';
+    if (status === 'on-the-way') return 'primary';
+    if (status === 'delivered') return 'success';
+    return 'default';
   };
+
+  const getStatusLabel = (status) => {
+    if (status === 'on-the-way') return 'On the Way';
+    return status;
+  };
+
+  const tabs = [
+    {
+      value: 'all',
+      label: 'All Orders',
+      badge: orders.length
+    },
+    {
+      value: 'confirmed',
+      label: 'Confirmed',
+      badge: orders.filter(o => o.status === 'Confirmed').length
+    },
+    {
+      value: 'on-the-way',
+      label: 'On the Way',
+      badge: orders.filter(o => o.status === 'on-the-way').length
+    },
+    {
+      value: 'delivered',
+      label: 'Delivered',
+      badge: orders.filter(o => o.status === 'delivered').length
+    }
+  ];
+
+  if (loading) {
+    return (
+      <div className="orders-page">
+        <div className="loading-container">
+          <LoadingSpinner size="lg" />
+          <p className="loading-text">Loading orders...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="orders-page">
-      <div className="page-header">
-        <h1 className="page-title">Order Management</h1>
-        <p className="page-subtitle">Manage and track all orders</p>
-      </div>
-
-      <div className="tabs">
-        <button
-          className={`tab ${activeTab === 'all' ? 'tab-active' : ''}`}
-          onClick={() => setActiveTab('all')}
-        >
-          All Orders
-          <span className="tab-badge">{orders.length}</span>
-        </button>
-        <button
-          className={`tab ${activeTab === 'confirmed' ? 'tab-active' : ''}`}
-          onClick={() => setActiveTab('confirmed')}
-        >
-          Confirmed
-          <span className="tab-badge">{orders.filter(o => o.status === 'Confirmed').length}</span>
-        </button>
-        <button
-          className={`tab ${activeTab === 'on-the-way' ? 'tab-active' : ''}`}
-          onClick={() => setActiveTab('on-the-way')}
-        >
-          On the Way
-          <span className="tab-badge">{orders.filter(o => o.status === 'on-the-way').length}</span>
-        </button>
-        <button
-          className={`tab ${activeTab === 'delivered' ? 'tab-active' : ''}`}
-          onClick={() => setActiveTab('delivered')}
-        >
-          Delivered
-          <span className="tab-badge">{orders.filter(o => o.status === 'delivered').length}</span>
-        </button>
-      </div>
-
-      {loading ? (
-        <div className="loading">Loading orders...</div>
-      ) : filteredOrders.length === 0 ? (
-        <div className="empty-state">
-          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
-          <h3>No orders found</h3>
-          <p>Orders will appear here once customers start placing them</p>
+      <div className="orders-header">
+        <div>
+          <h2 className="orders-title">Order Management</h2>
+          <p className="orders-subtitle">Track and manage all orders in one place</p>
         </div>
+      </div>
+
+      <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
+
+      {filteredOrders.length === 0 ? (
+        <EmptyState
+          icon={
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          }
+          title="No orders found"
+          description={`No ${activeTab === 'all' ? '' : activeTab + ' '}orders at the moment`}
+        />
       ) : (
         <div className="orders-grid">
           {filteredOrders.map((order) => (
-            <div key={order._id} className="order-card">
-              <div className="order-header">
+            <Card key={order._id} className="order-card">
+              <div className="order-card-header">
                 <div className="order-id-section">
                   <span className="order-label">Order ID</span>
                   <span className="order-id">#{order._id.slice(-8).toUpperCase()}</span>
                 </div>
-                <span className={`status-badge ${getStatusColor(order.status)}`}>
-                  {order.status === 'on-the-way' ? 'On the Way' : order.status}
-                </span>
+                <Badge variant={getStatusVariant(order.status)}>
+                  {getStatusLabel(order.status)}
+                </Badge>
               </div>
 
               <div className="order-time">
@@ -191,12 +199,12 @@ const Orders = () => {
                   <span className="detail-value">{order.sabjisSelected.join(', ')}</span>
                 </div>
                 {order.isSpecial && (
-                  <div className="special-badge">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <Badge variant="warning" size="sm" className="special-badge-inline">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
-                    Special Thali
-                  </div>
+                    Special
+                  </Badge>
                 )}
               </div>
 
@@ -213,7 +221,7 @@ const Orders = () => {
                 </div>
               </div>
 
-              <div className="order-price">
+              <div className="order-price-row">
                 <span className="price-label">Total Amount</span>
                 <span className="price-value">₹{order.totalPrice}</span>
               </div>
@@ -247,7 +255,7 @@ const Orders = () => {
               </div>
 
               {verifyingOrderId === order._id ? (
-                <div className="verify-otp">
+                <div className="verify-otp-section">
                   <input
                     type="text"
                     placeholder="Enter OTP to verify"
@@ -257,40 +265,40 @@ const Orders = () => {
                     maxLength="4"
                   />
                   <div className="verify-actions">
-                    <button
-                      className="btn-verify"
+                    <Button
+                      variant="success"
                       onClick={() => verifyAndDeliver(order)}
                     >
                       Verify & Mark Delivered
-                    </button>
-                    <button
-                      className="btn-cancel"
+                    </Button>
+                    <Button
+                      variant="ghost"
                       onClick={() => {
                         setVerifyingOrderId(null);
                         setOtpInput('');
                       }}
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ) : (
                 <div className="order-actions">
                   {order.status === 'Confirmed' && (
-                    <button
-                      className="btn-action btn-primary"
+                    <Button
+                      variant="primary"
                       onClick={() => updateOrderStatus(order._id, 'on-the-way')}
                     >
                       Mark On the Way
-                    </button>
+                    </Button>
                   )}
                   {order.status === 'on-the-way' && (
-                    <button
-                      className="btn-action btn-success"
+                    <Button
+                      variant="success"
                       onClick={() => updateOrderStatus(order._id, 'delivered')}
                     >
                       Mark Delivered
-                    </button>
+                    </Button>
                   )}
                   {order.status === 'delivered' && (
                     <div className="delivered-badge">
@@ -303,7 +311,7 @@ const Orders = () => {
                   )}
                 </div>
               )}
-            </div>
+            </Card>
           ))}
         </div>
       )}
