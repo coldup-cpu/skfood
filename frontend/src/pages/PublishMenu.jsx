@@ -4,12 +4,14 @@ import './PublishMenu.css';
 
 const PublishMenu = () => {
   const [mealType, setMealType] = useState('lunch');
-  const [basePrice, setBasePrice] = useState(60);
+  const [basePrice, setBasePrice] = useState(120);
   const [sabjis, setSabjis] = useState([]);
   const [menuHistory, setMenuHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [uploadingSabjiIndex, setUploadingSabjiIndex] = useState(null);
   const [showHistory, setShowHistory] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [newSabji, setNewSabji] = useState({ name: '', imageUrl: '', isSpecial: false });
 
   useEffect(() => {
     fetchMenuHistory();
@@ -24,8 +26,23 @@ const PublishMenu = () => {
     }
   };
 
+  const openModal = () => {
+    setNewSabji({ name: '', imageUrl: '', isSpecial: false });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setNewSabji({ name: '', imageUrl: '', isSpecial: false });
+  };
+
   const addSabji = () => {
-    setSabjis([...sabjis, { name: '', imageUrl: '', isSpecial: false }]);
+    if (!newSabji.name.trim()) {
+      alert('Please enter sabji name');
+      return;
+    }
+    setSabjis([...sabjis, { ...newSabji }]);
+    closeModal();
   };
 
   const removeSabji = (index) => {
@@ -54,6 +71,30 @@ const PublishMenu = () => {
     } finally {
       setUploadingSabjiIndex(null);
     }
+  };
+
+  const handleModalImageUpload = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('imageFile', file);
+
+    try {
+      setUploadingSabjiIndex(-1);
+      const response = await adminAPI.uploadImage(formData);
+      setNewSabji({ ...newSabji, imageUrl: response.data.url });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image. Please try again.');
+    } finally {
+      setUploadingSabjiIndex(null);
+    }
+  };
+
+  const toggleSpecial = (index) => {
+    const updatedSabjis = [...sabjis];
+    updatedSabjis[index].isSpecial = !updatedSabjis[index].isSpecial;
+    setSabjis(updatedSabjis);
   };
 
   const loadHistoryMenu = (menu) => {
@@ -98,134 +139,97 @@ const PublishMenu = () => {
   return (
     <div className="publish-menu-page">
       <div className="page-header">
-        <div>
-          <h1 className="page-title">Publish Menu</h1>
-          <p className="page-subtitle">Create or update lunch & dinner menu</p>
-        </div>
-        <button
-          className="btn-history"
-          onClick={() => setShowHistory(!showHistory)}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-          {showHistory ? 'Hide' : 'Show'} History
-        </button>
+        <h1 className="page-title">Publish Menu</h1>
       </div>
 
-      {showHistory && (
-        <div className="menu-history">
-          <h3 className="history-title">Previous Menus</h3>
-          {menuHistory.length === 0 ? (
-            <p className="history-empty">No previous menus found</p>
-          ) : (
-            <div className="history-grid">
-              {menuHistory.map((menu) => (
-                <div key={menu._id} className="history-card">
-                  <div className="history-header">
-                    <span className="history-meal-type">
-                      {menu.mealType === 'lunch' ? '🌞 Lunch' : '🌙 Dinner'}
-                    </span>
-                    <span className="history-price">₹{menu.basePrice}</span>
-                  </div>
-                  <div className="history-sabjis">
-                    {menu.listOfSabjis?.slice(0, 3).map((sabji, idx) => (
-                      <div key={idx} className="history-sabji">
-                        {sabji.isSpecial && <span className="star">⭐</span>}
-                        {sabji.name}
-                      </div>
-                    ))}
-                    {menu.listOfSabjis?.length > 3 && (
-                      <div className="history-more">+{menu.listOfSabjis.length - 3} more</div>
-                    )}
-                  </div>
-                  <button
-                    className="btn-load-history"
-                    onClick={() => loadHistoryMenu(menu)}
-                  >
-                    Load This Menu
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
       <div className="menu-form">
-        <div className="form-section">
-          <label className="form-label">Meal Type</label>
+        <div className="form-section meal-type-section">
+          <h2 className="section-title">Meal Type</h2>
           <div className="meal-type-toggle">
             <button
               className={`toggle-btn ${mealType === 'lunch' ? 'toggle-active' : ''}`}
               onClick={() => setMealType('lunch')}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
-              Lunch
+              Lunch (12-3 PM)
             </button>
             <button
               className={`toggle-btn ${mealType === 'dinner' ? 'toggle-active' : ''}`}
               onClick={() => setMealType('dinner')}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-              Dinner
+              Dinner (7-10 PM)
             </button>
           </div>
         </div>
 
-        <div className="form-section">
-          <label className="form-label">Base Price (₹)</label>
-          <input
-            type="number"
-            value={basePrice}
-            onChange={(e) => setBasePrice(Number(e.target.value))}
-            className="price-input"
-            min="0"
-          />
+        <div className="form-section base-price-section">
+          <h2 className="section-title">Base Price</h2>
+          <div className="price-input-wrapper">
+            <span className="price-currency">₹</span>
+            <input
+              type="number"
+              value={basePrice}
+              onChange={(e) => setBasePrice(Number(e.target.value))}
+              className="price-input"
+              min="0"
+            />
+          </div>
+          <p className="price-helper-text">Includes 2 sabjis + base + raita + salad</p>
         </div>
 
-        <div className="form-section">
+        <div className="form-section sabjis-section">
           <div className="section-header">
-            <label className="form-label">Sabjis</label>
-            <button className="btn-add-sabji" onClick={addSabji}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Add Sabji
+            <h2 className="section-title">Today's Sabjis</h2>
+            <button className="btn-add-sabji" onClick={openModal}>
+              + Add Sabji
             </button>
           </div>
 
           {sabjis.length === 0 ? (
-            <div className="empty-sabjis">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-              <p>No sabjis added yet</p>
-              <p className="empty-subtitle">Click "Add Sabji" to start building your menu</p>
+            <div className="empty-state">
+              <p className="empty-message">No sabjis added yet</p>
             </div>
           ) : (
-            <div className="sabjis-list">
+            <div className="sabjis-grid">
               {sabjis.map((sabji, index) => (
-                <div key={index} className="sabji-card">
-                  <div className="sabji-card-header">
-                    <span className="sabji-number">Sabji #{index + 1}</span>
+                <div key={index} className="sabji-item">
+                  <div className="sabji-image-wrapper">
+                    {sabji.imageUrl ? (
+                      <img src={sabji.imageUrl} alt={sabji.name} className="sabji-image" />
+                    ) : (
+                      <div className="sabji-image-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                          <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  <div className="sabji-details">
+                    <div className="sabji-name-row">
+                      <span className="sabji-name">{sabji.name}</span>
+                      {sabji.isSpecial && (
+                        <span className="special-badge">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                          </svg>
+                          Special
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="sabji-actions">
                     <button
-                      className="btn-remove"
+                      className={`btn-star ${sabji.isSpecial ? 'starred' : ''}`}
+                      onClick={() => toggleSpecial(index)}
+                      title={sabji.isSpecial ? 'Unmark as special' : 'Mark as special'}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill={sabji.isSpecial ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                    </button>
+                    <button
+                      className="btn-remove-sabji"
                       onClick={() => removeSabji(index)}
                       title="Remove sabji"
                     >
@@ -235,102 +239,102 @@ const PublishMenu = () => {
                       </svg>
                     </button>
                   </div>
-
-                  <div className="sabji-form">
-                    <div className="form-field">
-                      <label className="field-label">Name</label>
-                      <input
-                        type="text"
-                        value={sabji.name}
-                        onChange={(e) => updateSabji(index, 'name', e.target.value)}
-                        placeholder="e.g., Paneer Butter Masala"
-                        className="field-input"
-                      />
-                    </div>
-
-                    <div className="form-field">
-                      <label className="field-label">Image</label>
-                      <div className="image-upload-wrapper">
-                        {sabji.imageUrl ? (
-                          <div className="image-preview">
-                            <img src={sabji.imageUrl} alt={sabji.name} />
-                            <button
-                              className="btn-change-image"
-                              onClick={() => document.getElementById(`file-${index}`).click()}
-                            >
-                              Change Image
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="upload-placeholder" onClick={() => document.getElementById(`file-${index}`).click()}>
-                            {uploadingSabjiIndex === index ? (
-                              <div className="uploading">Uploading...</div>
-                            ) : (
-                              <>
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                  <polyline points="17 8 12 3 7 8"></polyline>
-                                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                                </svg>
-                                <span>Click to upload image</span>
-                              </>
-                            )}
-                          </div>
-                        )}
-                        <input
-                          id={`file-${index}`}
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleImageUpload(index, e.target.files[0])}
-                          style={{ display: 'none' }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-field">
-                      <label className="checkbox-label">
-                        <input
-                          type="checkbox"
-                          checked={sabji.isSpecial}
-                          onChange={(e) => updateSabji(index, 'isSpecial', e.target.checked)}
-                          className="checkbox-input"
-                        />
-                        <span className="checkbox-text">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                          </svg>
-                          Mark as Special
-                        </span>
-                      </label>
-                    </div>
-                  </div>
                 </div>
               ))}
             </div>
           )}
+
+          {sabjis.length > 0 && (
+            <div className="sabjis-summary">
+              <span className="summary-text">{sabjis.length} sabji{sabjis.length !== 1 ? 's' : ''} added. Add 1 more to publish.</span>
+            </div>
+          )}
         </div>
 
-        <div className="form-actions">
-          <button
-            className="btn-publish"
-            onClick={publishMenu}
-            disabled={loading || sabjis.length === 0}
-          >
-            {loading ? (
-              'Publishing...'
-            ) : (
-              <>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                  <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-                Publish Menu
-              </>
-            )}
-          </button>
-        </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3 className="modal-title">Add New Sabji</h3>
+              <button className="modal-close" onClick={closeModal}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <div className="modal-field">
+                <label className="modal-label">Sabji Name</label>
+                <input
+                  type="text"
+                  value={newSabji.name}
+                  onChange={(e) => setNewSabji({ ...newSabji, name: e.target.value })}
+                  placeholder="e.g., Aloo Gobi"
+                  className="modal-input"
+                  autoFocus
+                />
+              </div>
+
+              <div className="modal-field">
+                <label className="modal-label">Image URL (Optional)</label>
+                <div className="modal-image-input-group">
+                  <input
+                    type="text"
+                    value={newSabji.imageUrl}
+                    onChange={(e) => setNewSabji({ ...newSabji, imageUrl: e.target.value })}
+                    placeholder="https://example.com/image.jpg"
+                    className="modal-input"
+                  />
+                  <button
+                    className="btn-upload-icon"
+                    onClick={() => document.getElementById('modal-file-input').click()}
+                    title="Upload image"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                  </button>
+                  <input
+                    id="modal-file-input"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleModalImageUpload(e.target.files[0])}
+                    style={{ display: 'none' }}
+                  />
+                </div>
+                <p className="modal-helper-text">Leave empty for default image</p>
+              </div>
+
+              <div className="modal-field">
+                <label className="modal-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={newSabji.isSpecial}
+                    onChange={(e) => setNewSabji({ ...newSabji, isSpecial: e.target.checked })}
+                    className="modal-checkbox"
+                  />
+                  <span>Mark as Today's Special</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button className="btn-modal-cancel" onClick={closeModal}>
+                Cancel
+              </button>
+              <button className="btn-modal-add" onClick={addSabji} disabled={uploadingSabjiIndex === -1}>
+                {uploadingSabjiIndex === -1 ? 'Uploading...' : 'Add Sabji'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
