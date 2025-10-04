@@ -44,10 +44,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await authAPI.login({ email, password });
-      const { token } = response.data;
+      const { token, user: userData } = response.data;
       
       localStorage.setItem('token', token);
-      await checkAuth();
+      setUser(userData);
+      setIsAuthenticated(true);
       
       return { success: true };
     } catch (error) {
@@ -62,10 +63,11 @@ export const AuthProvider = ({ children }) => {
   const signup = async (name, email, password) => {
     try {
       const response = await authAPI.signup({ name, email, password });
-      const { token } = response.data;
+      const { token, user: userData } = response.data;
       
       localStorage.setItem('token', token);
-      await checkAuth();
+      setUser(userData);
+      setIsAuthenticated(true);
       
       return { success: true };
     } catch (error) {
@@ -93,6 +95,10 @@ export const AuthProvider = ({ children }) => {
     authAPI.googleAuth();
   };
 
+  const updateUser = (userData) => {
+    setUser(prev => ({ ...prev, ...userData }));
+  };
+
   const value = {
     user,
     isAuthenticated,
@@ -101,7 +107,8 @@ export const AuthProvider = ({ children }) => {
     signup,
     logout,
     googleAuth,
-    checkAuth
+    checkAuth,
+    updateUser
   };
 
   return (

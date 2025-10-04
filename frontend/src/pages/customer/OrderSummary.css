@@ -1,0 +1,370 @@
+.order-summary {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  min-height: calc(100vh - 140px);
+}
+
+.order-summary-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: var(--color-gray-600);
+  margin: 0;
+}
+
+.order-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* Thali Summary Card */
+.thali-summary-card {
+  padding: var(--spacing-2xl);
+}
+
+.thali-visual {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.thali-plate {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 50%;
+  border: 8px solid var(--color-gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.plate-center {
+  font-size: 32px;
+  z-index: 2;
+}
+
+.plate-items {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.plate-item {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: var(--color-white);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+}
+
+.plate-item.item-1 {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.plate-item.item-2 {
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+.plate-item.item-base {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.thali-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.items-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.item-section {
+  border-bottom: 1px solid var(--color-gray-200);
+  padding-bottom: var(--spacing-lg);
+}
+
+.item-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-md);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+}
+
+.item-name {
+  font-size: 15px;
+  color: var(--color-gray-700);
+}
+
+.item-badges {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.item-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary-customer);
+}
+
+/* Quantity Card */
+.quantity-card {
+  padding: var(--spacing-2xl);
+  text-align: center;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-description {
+  font-size: 14px;
+  color: var(--color-gray-600);
+  margin-bottom: var(--spacing-xl);
+}
+
+.quantity-selector-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.quantity-display-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 120px;
+}
+
+.quantity-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-primary-customer);
+  line-height: 1;
+}
+
+.quantity-label {
+  font-size: 16px;
+  color: var(--color-gray-600);
+  font-weight: 500;
+}
+
+.bulk-discount-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-md);
+  color: var(--color-success-dark);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Instructions Card */
+.instructions-card {
+  padding: var(--spacing-2xl);
+}
+
+.char-count {
+  text-align: right;
+  font-size: 12px;
+  color: var(--color-gray-500);
+  margin-top: var(--spacing-sm);
+}
+
+/* Price Breakdown Card */
+.price-breakdown-card {
+  padding: var(--spacing-2xl);
+}
+
+.price-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.price-row.discount {
+  color: var(--color-success);
+}
+
+.price-row.discount .price-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.price-label {
+  color: var(--color-gray-700);
+}
+
+.price-value {
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.price-row.discount .price-value {
+  color: var(--color-success);
+}
+
+.price-divider {
+  height: 2px;
+  background: var(--color-gray-200);
+  margin: var(--spacing-md) 0;
+}
+
+.price-row.total {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary-customer);
+  padding-top: var(--spacing-md);
+}
+
+/* Order Actions */
+.order-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+}
+
+.order-actions .btn {
+  flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-summary {
+    padding: var(--spacing-md);
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .thali-summary-card,
+  .quantity-card,
+  .instructions-card,
+  .price-breakdown-card {
+    padding: var(--spacing-lg);
+  }
+
+  .thali-plate {
+    width: 160px;
+    height: 160px;
+  }
+
+  .plate-center {
+    font-size: 28px;
+  }
+
+  .plate-item {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .quantity-number {
+    font-size: 40px;
+  }
+
+  .quantity-selector-large {
+    gap: var(--spacing-lg);
+  }
+
+  .order-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .thali-plate {
+    width: 140px;
+    height: 140px;
+  }
+
+  .plate-center {
+    font-size: 24px;
+  }
+
+  .plate-item {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+  }
+
+  .quantity-number {
+    font-size: 36px;
+  }
+
+  .price-row.total {
+    font-size: 20px;
+  }
+
+  .thali-title {
+    font-size: 20px;
+  }
+}
