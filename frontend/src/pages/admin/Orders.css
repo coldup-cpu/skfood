@@ -2,6 +2,8 @@
   max-width: 1400px;
   margin: 0 auto;
   animation: fadeIn var(--transition-base) ease-in;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .orders-header {
@@ -40,6 +42,7 @@
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: var(--spacing-lg);
   margin-top: var(--spacing-xl);
+  width: 100%;
 }
 
 .order-card {
@@ -328,6 +331,10 @@
 }
 
 @media (max-width: 768px) {
+  .orders-page {
+    padding: 0 var(--spacing-md);
+  }
+
   .orders-title {
     font-size: 24px;
   }
@@ -339,6 +346,7 @@
   .orders-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
+    min-width: 0;
   }
 
   .order-card {
@@ -379,6 +387,10 @@
 }
 
 @media (max-width: 480px) {
+  .orders-page {
+    padding: 0 var(--spacing-sm);
+  }
+
   .order-card-header {
     flex-direction: column;
     gap: var(--spacing-sm);
@@ -404,5 +416,13 @@
 
   .detail-value {
     text-align: left;
+  }
+
+  .orders-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    padding: 0;
+    margin: 0;
+    width: 100%;
   }
 }

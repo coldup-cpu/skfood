@@ -2,6 +2,8 @@
   max-width: 680px;
   margin: 0 auto;
   padding: 24px 16px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .page-header {
@@ -50,6 +52,7 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .history-card {
@@ -334,6 +337,7 @@
 @media (max-width: 768px) {
   .publish-menu-page {
     padding: 20px 12px;
+    max-width: 100%;
   }
 
   .page-title {
@@ -350,6 +354,7 @@
 
   .history-grid {
     grid-template-columns: 1fr;
+    min-width: 0;
   }
 
   .sabjis-grid {
@@ -371,6 +376,10 @@
 }
 
 @media (max-width: 480px) {
+  .publish-menu-page {
+    padding: 16px 8px;
+  }
+
   .sabji-name-row {
     flex-direction: column;
     align-items: flex-start;
@@ -387,5 +396,14 @@
 
   .history-price {
     font-size: 16px;
+  }
+
+  .history-grid,
+  .sabjis-grid,
+  .meal-type-toggle {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 }
