@@ -24,4 +24,18 @@ export const adminAPI = {
   getOrderById: (id) => api.get(`/admin/orderwithId/${id}`),
 };
 
+export const userAPI = {
+  getLunchMenu: () => api.get('/userPanel/seeLunchMenu'),
+
+  getDinnerMenu: () => api.get('/userPanel/seeDinnerMenu'),
+
+  placeOrder: (orderData) => api.post('/userPanel/orderPreparedThali', orderData),
+
+  getMyOrders: () => api.get('/userPanel/myAllOrders'),
+
+  getConfirmedOrders: () => api.get('/userPanel/confirmedOrders'),
+
+  getOrderById: (id) => api.get(`/userPanel/myOrderwithId/${id}`),
+};
+
 export default api;
