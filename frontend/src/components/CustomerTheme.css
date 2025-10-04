@@ -1,0 +1,401 @@
+/* Customer Theme - Orange Color Scheme */
+:root {
+  /* Override primary colors for customer pages */
+  --color-primary-customer: #FF7043;
+  --color-primary-customer-dark: #FF5722;
+  --color-primary-customer-light: #FFAB91;
+  
+  /* Customer-specific gradients */
+  --gradient-primary-customer: linear-gradient(135deg, #FF7043 0%, #FF5722 100%);
+  --gradient-accent-customer: linear-gradient(135deg, #FF7043 0%, #FF5722 100%);
+  --gradient-secondary-customer: linear-gradient(135deg, #FFAB91 0%, #FF7043 100%);
+  
+  /* Customer theme colors */
+  --color-orange-50: #FFF3E0;
+  --color-orange-100: #FFE0B2;
+  --color-orange-200: #FFCC80;
+  --color-orange-300: #FFB74D;
+  --color-orange-400: #FFA726;
+  --color-orange-500: #FF9800;
+  --color-orange-600: #FF7043;
+  --color-orange-700: #FF5722;
+  --color-orange-800: #E64A19;
+  --color-orange-900: #BF360C;
+}
+
+/* Customer Layout Styles */
+.customer-layout {
+  min-height: 100vh;
+  background-color: var(--color-gray-50);
+}
+
+/* Customer Button Variants */
+.btn-primary-customer {
+  background: var(--gradient-primary-customer);
+  color: var(--color-white);
+  border: none;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+
+.btn-primary-customer:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary-customer {
+  background: var(--color-white);
+  color: var(--color-primary-customer);
+  border: 2px solid var(--color-primary-customer);
+}
+
+.btn-secondary-customer:hover:not(:disabled) {
+  background: var(--color-primary-customer);
+  color: var(--color-white);
+}
+
+/* Customer Badge Variants */
+.badge-primary-customer {
+  background: var(--gradient-primary-customer);
+  color: var(--color-white);
+}
+
+.badge-secondary-customer {
+  background-color: rgba(255, 112, 67, 0.1);
+  color: var(--color-primary-customer-dark);
+}
+
+.badge-special {
+  background: var(--gradient-warning);
+  color: var(--color-white);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Customer Card Styles */
+.card-customer {
+  border: 1px solid var(--color-gray-200);
+  transition: all var(--transition-base);
+}
+
+.card-customer:hover {
+  border-color: var(--color-primary-customer);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-customer.selected {
+  border: 3px solid var(--color-primary-customer);
+  box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.1);
+}
+
+/* Customer Input Styles */
+.input-customer:focus {
+  border-color: var(--color-primary-customer);
+  box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.1);
+}
+
+/* Progress Indicator */
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.progress-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all var(--transition-base);
+}
+
+.progress-circle.active {
+  background: var(--gradient-primary-customer);
+  color: var(--color-white);
+}
+
+.progress-circle.completed {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.progress-circle.inactive {
+  background: var(--color-gray-200);
+  color: var(--color-gray-500);
+}
+
+.progress-line {
+  width: 40px;
+  height: 2px;
+  background: var(--color-gray-200);
+  transition: all var(--transition-base);
+}
+
+.progress-line.completed {
+  background: var(--color-success);
+}
+
+/* Quantity Selector */
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.quantity-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--gradient-primary-customer);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quantity-btn:hover {
+  transform: scale(1.1);
+}
+
+.quantity-btn:disabled {
+  background: var(--color-gray-300);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.quantity-display {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Price Display */
+.price-display {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-primary-customer);
+  text-align: center;
+}
+
+.price-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-gray-200);
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.price-row.total {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary-customer);
+  padding-top: var(--spacing-md);
+  border-top: 2px solid var(--color-gray-200);
+}
+
+.price-row.discount {
+  color: var(--color-success);
+}
+
+/* Selection Counter */
+.selection-counter {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient-primary-customer);
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+}
+
+/* OTP Display */
+.otp-display-customer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, rgba(255, 112, 67, 0.05) 0%, rgba(255, 87, 34, 0.1) 100%);
+  border: 2px dashed var(--color-primary-customer);
+  border-radius: var(--radius-lg);
+  margin: var(--spacing-lg) 0;
+}
+
+.otp-code-customer {
+  font-size: 48px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--color-primary-customer);
+  letter-spacing: 8px;
+  text-shadow: 0 2px 4px rgba(255, 112, 67, 0.2);
+}
+
+/* Status Timeline */
+.status-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+}
+
+.timeline-step {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  position: relative;
+}
+
+.timeline-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 40px;
+  width: 2px;
+  height: 40px;
+  background: var(--color-gray-200);
+}
+
+.timeline-step.completed::after {
+  background: var(--color-success);
+}
+
+.timeline-step.active::after {
+  background: var(--color-primary-customer);
+}
+
+.timeline-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.timeline-icon.completed {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.timeline-icon.active {
+  background: var(--gradient-primary-customer);
+  color: var(--color-white);
+  animation: pulse 2s infinite;
+}
+
+.timeline-icon.inactive {
+  background: var(--color-gray-200);
+  color: var(--color-gray-500);
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-title {
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: 4px;
+}
+
+.timeline-time {
+  font-size: 13px;
+  color: var(--color-gray-500);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .progress-indicator {
+    gap: var(--spacing-sm);
+  }
+  
+  .progress-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  
+  .progress-line {
+    width: 20px;
+  }
+  
+  .quantity-selector {
+    gap: var(--spacing-sm);
+  }
+  
+  .quantity-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .quantity-display {
+    font-size: 20px;
+    min-width: 32px;
+  }
+  
+  .price-display {
+    font-size: 28px;
+  }
+  
+  .otp-code-customer {
+    font-size: 36px;
+    letter-spacing: 4px;
+  }
+}
+
+/* Touch Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .quantity-btn, .card-customer {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .card-customer:active {
+    transform: scale(0.98);
+  }
+  
+  .btn:active {
+    transform: translateY(0);
+  }
+}

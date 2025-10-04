@@ -24,4 +24,35 @@ export const adminAPI = {
   getOrderById: (id) => api.get(`/admin/orderwithId/${id}`),
 };
 
+// Add user API functions
+export const userAPI = {
+  // Menu
+  getLunchMenu: () => api.get('/userPanel/seeLunchMenu'),
+  getDinnerMenu: () => api.get('/userPanel/seeDinnerMenu'),
+  
+  // Orders
+  createOrder: (orderData) => api.post('/userPanel/orderPreparedThali', orderData),
+  getAllOrders: () => api.get('/userPanel/myAllOrders'),
+  getConfirmedOrders: () => api.get('/userPanel/confirmedOrders'),
+  getOrderById: (id) => api.get(`/userPanel/myOrderwithId/${id}`),
+};
+
+// Add auth API functions
+export const authAPI = {
+  signup: (userData) => api.post('/userAuth/signup', userData),
+  login: (credentials) => api.post('/userAuth/login', credentials),
+  logout: () => api.post('/userAuth/logout'),
+  getProfile: () => api.get('/userAuth/profile'),
+  googleAuth: () => window.location.href = '/api/userAuth/google',
+};
+
+// Add token to requests if available
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export default api;
