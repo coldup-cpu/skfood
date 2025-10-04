@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AdminLayout from './components/AdminLayout';
-import Dashboard from './pages/Dashboard';
-import Orders from './pages/Orders';
-import PublishMenu from './pages/PublishMenu';
+import AdminLayout from './layouts/AdminLayout';
+import Dashboard from './pages/admin/Dashboard';
+import Orders from './pages/admin/Orders';
+import PublishMenu from './pages/admin/PublishMenu';
 import './App.css';
 
 function App() {

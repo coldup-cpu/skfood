@@ -1,13 +1,13 @@
 import './UI.css';
 
-export const Button = ({ children, variant = 'primary', size = 'md', className = '', disabled = false, loading = false, icon, ...props }) => {
+export const Button = ({ children, variant = 'primary', size = 'md', className = '', disabled = false, loading = false, icon, as: Component = 'button', ...props }) => {
   const baseClass = 'btn';
   const variantClass = `btn-${variant}`;
   const sizeClass = `btn-${size}`;
   const classes = `${baseClass} ${variantClass} ${sizeClass} ${className}`.trim();
 
   return (
-    <button className={classes} disabled={disabled || loading} {...props}>
+    <Component className={classes} disabled={disabled || loading} {...props}>
       {loading ? (
         <>
           <span className="btn-spinner"></span>
@@ -19,7 +19,7 @@ export const Button = ({ children, variant = 'primary', size = 'md', className =
           {children}
         </>
       )}
-    </button>
+    </Component>
   );
 };
 
@@ -32,9 +32,14 @@ export const Card = ({ children, className = '', hover = false, ...props }) => {
   );
 };
 
-export const Badge = ({ children, variant = 'default', size = 'md', className = '' }) => {
+export const Badge = ({ children, variant = 'default', size = 'md', className = '', icon }) => {
   const classes = `badge badge-${variant} badge-${size} ${className}`.trim();
-  return <span className={classes}>{children}</span>;
+  return (
+    <span className={classes}>
+      {icon && <span className="badge-icon">{icon}</span>}
+      {children}
+    </span>
+  );
 };
 
 export const Skeleton = ({ className = '', width, height, circle = false }) => {
@@ -46,13 +51,21 @@ export const Skeleton = ({ className = '', width, height, circle = false }) => {
   return <div className={`skeleton ${className}`} style={style}></div>;
 };
 
-export const Input = ({ label, error, icon, className = '', ...props }) => {
+export const Input = ({ label, error, icon, prefix, className = '', required = false, ...props }) => {
   return (
     <div className={`input-wrapper ${className}`}>
-      {label && <label className="input-label">{label}</label>}
+      {label && (
+        <label className={`input-label ${required ? 'required' : ''}`}>
+          {label}
+        </label>
+      )}
       <div className="input-container">
+        {prefix && <span className="input-prefix">{prefix}</span>}
         {icon && <span className="input-icon">{icon}</span>}
-        <input className={`input ${error ? 'input-error' : ''} ${icon ? 'input-with-icon' : ''}`} {...props} />
+        <input 
+          className={`input ${error ? 'input-error' : ''} ${icon ? 'input-with-icon' : ''} ${prefix ? 'input-with-prefix' : ''}`} 
+          {...props} 
+        />
       </div>
       {error && <span className="input-error-text">{error}</span>}
     </div>

@@ -1,0 +1,391 @@
+.publish-menu-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.menu-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.history-description {
+  font-size: 14px;
+  color: var(--color-gray-600);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.history-card {
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.history-meal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-meal-type {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  text-transform: capitalize;
+}
+
+.history-date {
+  font-size: 12px;
+  color: var(--color-gray-500);
+  font-weight: 500;
+}
+
+.history-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+.history-sabjis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.btn-load-history {
+  width: 100%;
+}
+
+.meal-type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.toggle-btn {
+  justify-content: center;
+}
+
+.price-helper-text {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+  color: var(--color-gray-600);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  border: 2px dashed var(--color-gray-300);
+  border-radius: var(--radius-md);
+  background: var(--color-gray-50);
+}
+
+.empty-message {
+  font-size: 14px;
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+.sabjis-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sabji-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.sabji-item:hover {
+  background: var(--color-gray-100);
+  border-color: var(--color-gray-300);
+}
+
+.sabji-image-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+}
+
+.sabji-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sabji-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-400);
+}
+
+.sabji-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.sabji-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sabji-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.sabji-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sabji-actions .btn.starred {
+  color: var(--color-warning);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.sabjis-summary {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.summary-text {
+  font-size: 13px;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.publish-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.publish-checkbox-label:hover {
+  background: var(--color-gray-100);
+  border-color: var(--color-gray-300);
+}
+
+.publish-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--color-accent);
+}
+
+.publish-checkbox-label span {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-gray-900);
+}
+
+.publish-helper-text {
+  font-size: 13px;
+  color: var(--color-gray-600);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.btn-publish {
+  width: 100%;
+  justify-content: center;
+}
+
+.modal-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.modal-image-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-image-input-group .input {
+  flex: 1;
+}
+
+.modal-helper-text {
+  font-size: 12px;
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+.modal-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-checkbox-label:hover {
+  background: var(--color-gray-100);
+  border-color: var(--color-gray-300);
+}
+
+.modal-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--color-accent);
+}
+
+.modal-checkbox-label span {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-gray-900);
+}
+
+@media (max-width: 768px) {
+  .publish-menu-page {
+    padding: 20px 12px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .meal-type-toggle {
+    gap: 8px;
+  }
+
+  .history-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sabjis-grid {
+    gap: 10px;
+  }
+
+  .sabji-item {
+    padding: 10px;
+  }
+
+  .sabji-image-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .sabji-name {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sabji-name-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .history-card {
+    padding: 14px;
+  }
+
+  .history-meal-type {
+    font-size: 15px;
+  }
+
+  .history-price {
+    font-size: 16px;
+  }
+}
