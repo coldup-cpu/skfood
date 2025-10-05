@@ -1,0 +1,306 @@
+.user-layout {
+  min-height: 100vh;
+  background-color: var(--user-bg-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.user-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--user-z-sticky);
+  background: var(--user-bg-white);
+  border-bottom: 1px solid var(--user-gray-200);
+  transition: all var(--user-transition-base);
+}
+
+.user-header.scrolled {
+  box-shadow: var(--user-shadow-md);
+}
+
+.user-header-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--user-spacing-md) var(--user-spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--user-spacing-md);
+}
+
+.user-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--user-spacing-md);
+}
+
+.user-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--user-gray-100);
+  border-radius: var(--user-radius-full);
+  color: var(--user-text-primary);
+  cursor: pointer;
+  transition: all var(--user-transition-fast);
+}
+
+.user-back-btn:hover {
+  background: var(--user-gray-200);
+  transform: translateX(-2px);
+}
+
+.user-back-btn:active {
+  transform: scale(0.95);
+}
+
+.user-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--user-spacing-sm);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--user-primary);
+  text-decoration: none;
+}
+
+.user-brand-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--user-primary-gradient);
+  border-radius: var(--user-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.user-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--user-spacing-sm);
+}
+
+.user-header-action {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: var(--user-radius-full);
+  color: var(--user-text-primary);
+  cursor: pointer;
+  transition: all var(--user-transition-fast);
+}
+
+.user-header-action:hover {
+  background: var(--user-gray-100);
+}
+
+.user-header-action:active {
+  transform: scale(0.95);
+}
+
+.user-cart-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  background: var(--user-primary);
+  color: white;
+  border-radius: var(--user-radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid white;
+}
+
+.user-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.user-content {
+  min-height: calc(100vh - 140px);
+}
+
+.user-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--user-z-fixed);
+  background: var(--user-bg-white);
+  border-top: 1px solid var(--user-gray-200);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.user-bottom-nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--user-spacing-sm) 0;
+}
+
+.user-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--user-spacing-xs);
+  border: none;
+  background: transparent;
+  color: var(--user-text-secondary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--user-transition-fast);
+}
+
+.user-nav-item:hover {
+  color: var(--user-primary);
+}
+
+.user-nav-item.active {
+  color: var(--user-primary);
+}
+
+.user-nav-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+.user-nav-item span {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.user-profile-dropdown {
+  position: relative;
+}
+
+.user-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--user-spacing-sm);
+  padding: var(--user-spacing-xs) var(--user-spacing-sm);
+  border: 1px solid var(--user-gray-200);
+  background: var(--user-bg-white);
+  border-radius: var(--user-radius-full);
+  cursor: pointer;
+  transition: all var(--user-transition-fast);
+}
+
+.user-profile-btn:hover {
+  background: var(--user-gray-50);
+  border-color: var(--user-gray-300);
+}
+
+.user-profile-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--user-primary-gradient);
+  border-radius: var(--user-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-profile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 200px;
+  background: var(--user-bg-white);
+  border-radius: var(--user-radius-lg);
+  box-shadow: var(--user-shadow-xl);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--user-transition-base);
+}
+
+.user-profile-dropdown.open .user-profile-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--user-spacing-sm);
+  width: 100%;
+  padding: var(--user-spacing-md);
+  border: none;
+  background: transparent;
+  color: var(--user-text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--user-transition-fast);
+}
+
+.user-profile-menu-item:hover {
+  background: var(--user-gray-50);
+}
+
+.user-profile-menu-divider {
+  height: 1px;
+  background: var(--user-gray-200);
+  margin: var(--user-spacing-xs) 0;
+}
+
+@media (max-width: 768px) {
+  .user-header-content {
+    padding: var(--user-spacing-md) var(--user-spacing-md);
+  }
+
+  .user-brand span {
+    font-size: 20px;
+  }
+
+  .user-bottom-nav {
+    display: block;
+  }
+
+  .user-content {
+    min-height: calc(100vh - 200px);
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-header-content {
+    padding: var(--user-spacing-sm) var(--user-spacing-md);
+  }
+
+  .user-brand span {
+    display: none;
+  }
+
+  .user-profile-btn span {
+    display: none;
+  }
+}

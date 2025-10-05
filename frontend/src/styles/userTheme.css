@@ -1,0 +1,166 @@
+:root {
+  --user-primary: #FF7043;
+  --user-primary-dark: #F4511E;
+  --user-primary-light: #FF8A65;
+  --user-primary-pale: #FFCCBC;
+  --user-primary-gradient: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+
+  --user-bg-white: #FFFFFF;
+  --user-bg-light: #FAFAFA;
+  --user-bg-gray: #F5F5F5;
+
+  --user-text-primary: #1F2937;
+  --user-text-secondary: #6B7280;
+  --user-text-light: #9CA3AF;
+  --user-text-white: #FFFFFF;
+
+  --user-gray-50: #F9FAFB;
+  --user-gray-100: #F3F4F6;
+  --user-gray-200: #E5E7EB;
+  --user-gray-300: #D1D5DB;
+  --user-gray-400: #9CA3AF;
+  --user-gray-500: #6B7280;
+  --user-gray-600: #4B5563;
+  --user-gray-700: #374151;
+  --user-gray-800: #1F2937;
+  --user-gray-900: #111827;
+
+  --user-success: #10B981;
+  --user-success-light: #D1FAE5;
+  --user-warning: #F59E0B;
+  --user-warning-light: #FEF3C7;
+  --user-error: #EF4444;
+  --user-error-light: #FEE2E2;
+  --user-info: #3B82F6;
+  --user-info-light: #DBEAFE;
+
+  --user-radius-sm: 8px;
+  --user-radius-md: 12px;
+  --user-radius-lg: 16px;
+  --user-radius-xl: 20px;
+  --user-radius-2xl: 24px;
+  --user-radius-full: 9999px;
+
+  --user-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --user-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --user-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --user-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --user-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --user-shadow-orange: 0 10px 25px -5px rgba(255, 112, 67, 0.3);
+
+  --user-spacing-xs: 4px;
+  --user-spacing-sm: 8px;
+  --user-spacing-md: 16px;
+  --user-spacing-lg: 24px;
+  --user-spacing-xl: 32px;
+  --user-spacing-2xl: 40px;
+  --user-spacing-3xl: 48px;
+
+  --user-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --user-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --user-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --user-transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  --user-z-dropdown: 1000;
+  --user-z-sticky: 1020;
+  --user-z-fixed: 1030;
+  --user-z-modal-backdrop: 1040;
+  --user-z-modal: 1050;
+  --user-z-popover: 1060;
+  --user-z-tooltip: 1070;
+}
+
+@keyframes user-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes user-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes user-slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes user-scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes user-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes user-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes user-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.user-animate-fadeIn {
+  animation: user-fadeIn var(--user-transition-base) ease-out;
+}
+
+.user-animate-slideUp {
+  animation: user-slideUp var(--user-transition-base) ease-out;
+}
+
+.user-animate-slideInRight {
+  animation: user-slideInRight var(--user-transition-base) ease-out;
+}
+
+.user-animate-scaleIn {
+  animation: user-scaleIn var(--user-transition-base) ease-out;
+}
+
+.user-animate-pulse {
+  animation: user-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.user-animate-bounce {
+  animation: user-bounce 1s ease-in-out infinite;
+}
