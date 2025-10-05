@@ -8,6 +8,33 @@ const api = axios.create({
   },
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      const currentPath = window.location.pathname;
+      if (currentPath.startsWith('/admin')) {
+        window.location.href = '/admin/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const authAPI = {
+  userLogin: (email, password) => api.post('/userAuth/login', { email, password }),
+
+  userSignup: (name, email, password) => api.post('/userAuth/signup', { name, email, password }),
+
+  userLogout: () => api.post('/userAuth/logout'),
+
+  getUserProfile: () => api.get('/userAuth/profile'),
+
+  adminLogin: (email, password) => api.post('/admin/login', { email, password }),
+
+  adminLogout: () => api.post('/admin/logout'),
+};
+
 export const adminAPI = {
   getMenuHistory: () => api.get('/admin/menuHistoryLog'),
 

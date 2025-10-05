@@ -1,7 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import { MealBuilderProvider } from './contexts/MealBuilderContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
 import UserLayout from './layouts/UserLayout';
+import AdminLogin from './pages/admin/AdminLogin';
 import Dashboard from './pages/admin/Dashboard';
 import Orders from './pages/admin/Orders';
 import PublishMenu from './pages/admin/PublishMenu';
@@ -16,28 +19,32 @@ import './App.css';
 
 function App() {
   return (
-    <MealBuilderProvider>
-      <Router>
-        <Routes>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="publish-menu" element={<PublishMenu />} />
-          </Route>
+    <AuthProvider>
+      <MealBuilderProvider>
+        <Router>
+          <Routes>
+            <Route path="/admin/login" element={<AdminLogin />} />
 
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<Home />} />
-            <Route path="build/dishes" element={<BuildDishes />} />
-            <Route path="build/base" element={<BuildBase />} />
-            <Route path="build/review" element={<OrderSummary />} />
-            <Route path="checkout/address" element={<DeliveryAddress />} />
-            <Route path="checkout/payment" element={<Payment />} />
-            <Route path="order-confirmation" element={<OrderConfirmation />} />
-          </Route>
-        </Routes>
-      </Router>
-    </MealBuilderProvider>
+            <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="publish-menu" element={<PublishMenu />} />
+            </Route>
+
+            <Route path="/" element={<UserLayout />}>
+              <Route index element={<Home />} />
+              <Route path="build/dishes" element={<BuildDishes />} />
+              <Route path="build/base" element={<BuildBase />} />
+              <Route path="build/review" element={<OrderSummary />} />
+              <Route path="checkout/address" element={<DeliveryAddress />} />
+              <Route path="checkout/payment" element={<Payment />} />
+              <Route path="order-confirmation" element={<OrderConfirmation />} />
+            </Route>
+          </Routes>
+        </Router>
+      </MealBuilderProvider>
+    </AuthProvider>
   );
 }
 

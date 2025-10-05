@@ -1,16 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMealBuilder } from '../../contexts/MealBuilderContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Button, ProgressSteps } from '../../components/user/UserComponents';
+import AuthModal from '../../components/AuthModal';
 import './BuildDishes.css';
 import './Payment.css';
 
 const Payment = () => {
   const navigate = useNavigate();
   const { calculateTotal } = useMealBuilder();
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState('upi');
   const [upiId, setUpiId] = useState('');
   const [processing, setProcessing] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      setShowAuthModal(true);
+    }
+  }, [isAuthenticated, authLoading]);
 
   const paymentMethods = [
     { id: 'upi', label: 'UPI', icon: '💳', recommended: true },
@@ -19,6 +29,11 @@ const Payment = () => {
   ];
 
   const handlePayment = async () => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
+
     setProcessing(true);
 
     setTimeout(() => {
@@ -28,8 +43,18 @@ const Payment = () => {
     }, 2000);
   };
 
+  const handleAuthSuccess = () => {
+    setShowAuthModal(false);
+  };
+
   return (
-    <div className="user-build-page user-animate-fadeIn">
+    <>
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={handleAuthSuccess}
+      />
+      <div className="user-build-page user-animate-fadeIn">
       <div className="user-build-container">
         <ProgressSteps steps={4} currentStep={3} />
 
@@ -136,6 +161,7 @@ const Payment = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

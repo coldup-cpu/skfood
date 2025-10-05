@@ -1,10 +1,13 @@
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const getPageTitle = () => {
     const path = location.pathname.split('/').filter(Boolean);
@@ -19,6 +22,11 @@ const AdminLayout = () => {
     if (window.innerWidth < 1024) {
       setSidebarOpen(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/admin/login');
   };
 
   return (
@@ -118,10 +126,11 @@ const AdminLayout = () => {
               </svg>
               <span className="notification-dot"></span>
             </button>
-            <button className="header-action" aria-label="Settings">
+            <button className="header-action" aria-label="Logout" onClick={handleLogout} title="Logout">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M12 1v6m0 6v6m5.66-13.66l-4.24 4.24m0 6l-4.24 4.24M1 12h6m6 0h6m-13.66 5.66l4.24-4.24m6 0l4.24 4.24"></path>
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
